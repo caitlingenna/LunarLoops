@@ -1,0 +1,130 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://assets/HUD/logofade.png" type="Texture" id=1]
+[ext_resource path="res://assets/background.png" type="Texture" id=2]
+[ext_resource path="res://assets/astronaut/astro75.png" type="Texture" id=3]
+[ext_resource path="res://assets/HUD/startButton.png" type="Texture" id=4]
+[ext_resource path="res://assets/HUD/startButtonHover1.png" type="Texture" id=5]
+[ext_resource path="res://assets/HUD/startButtonHover2.png" type="Texture" id=6]
+[ext_resource path="res://startScreen.gd" type="Script" id=7]
+[ext_resource path="res://assets/HUD/instrucPressed.png" type="Texture" id=8]
+[ext_resource path="res://assets/HUD/instruc.png" type="Texture" id=9]
+[ext_resource path="res://assets/astronaut/astro45.png" type="Texture" id=10]
+[ext_resource path="res://assets/astronaut/astro.png" type="Texture" id=11]
+[ext_resource path="res://assets/astronaut/astro90.png" type="Texture" id=12]
+[ext_resource path="res://assets/astronaut/astro60.png" type="Texture" id=13]
+[ext_resource path="res://assets/astronaut/astro30.png" type="Texture" id=14]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 500, 0, 500, 500 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 500, 500 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 1000, 0, 500, 500 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 1500, 0, 500, 500 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 4 ), SubResource( 4 ), SubResource( 3 ), SubResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 7.0
+} ]
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 11 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 3 ), ExtResource( 12 ), ExtResource( 3 ), ExtResource( 13 ), ExtResource( 10 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "float",
+"speed": 3.0
+} ]
+
+[sub_resource type="AnimatedTexture" id=7]
+flags = 4
+frames = 3
+frame_0/texture = ExtResource( 4 )
+frame_1/texture = ExtResource( 5 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 6 )
+frame_2/delay_sec = 0.0
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ ExtResource( 9 ), ExtResource( 8 ) ],
+"loop": false,
+"name": "press",
+"speed": 3.0
+} ]
+
+[node name="StartScreen" type="Node2D"]
+script = ExtResource( 7 )
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 512.173, 301.881 )
+scale = Vector2( 0.480522, 0.377805 )
+texture = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 517.527, 267.049 )
+scale = Vector2( 1.18867, 1.15298 )
+frames = SubResource( 5 )
+frame = 2
+playing = true
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( 647.167, 176.992 )
+rotation = -0.261799
+scale = Vector2( 0.567452, 0.552474 )
+frames = SubResource( 6 )
+animation = "float"
+frame = 8
+playing = true
+
+[node name="Start" type="TextureButton" parent="."]
+margin_left = 466.138
+margin_top = 320.42
+margin_right = 560.138
+margin_bottom = 414.42
+texture_normal = ExtResource( 4 )
+texture_hover = SubResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupDialog" type="PopupDialog" parent="."]
+margin_left = -442.0
+margin_top = -436.0
+margin_right = 40.0
+margin_bottom = 40.0
+popup_exclusive = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="PopupDialog"]
+position = Vector2( 238.571, 239.582 )
+frames = SubResource( 8 )
+animation = "press"
+
+[node name="TextureButton" type="TextureButton" parent="PopupDialog"]
+margin_left = 74.2614
+margin_top = 346.405
+margin_right = 404.261
+margin_bottom = 451.405
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Start" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="PopupDialog/TextureButton" to="." method="_on_TextureButton_pressed"]
